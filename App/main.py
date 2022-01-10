@@ -33,14 +33,12 @@ ScreenManager:
     MDRectangleFlatIconButton:
         text: "Login"
         icon: 'login'
-        #theme_text_color: "Custom"
-        #text_color: 0, 1, 1,0
         pos_hint: {"center_x": 0.4,"center_y":0.5}
         on_release: root.manager.current = "loginscreen"
 
     MDRectangleFlatIconButton:
         text: "Register"
-        icon: "Creation"
+        icon: "creation"
         pos_hint: {"center_x": 0.6,"center_y":0.5}
         on_release: root.manager.current = "registerscreen"
     MDIconButton:
