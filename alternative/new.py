@@ -1,8 +1,3 @@
-
-from tkinter import*
-import random
-import time
-import webbrowser
 import os 
 import time
 from pynput import mouse
@@ -11,34 +6,16 @@ import pyautogui as pt
 import signal
 from pynput.keyboard import Key, Listener
 
-def func_test_1():
-    webbrowser.open("https://www.youtube.com/watch?v=rwSJwzE7lAg")
-
-def func_test_2():
-    webbrowser.open("https://www.youtube.com/watch?v=fcZXfoB2f70")
-
-def func_test_3():
-    webbrowser.open("https://www.youtube.com/watch?v=tZGpRd-t7jg")
-
-def func_test_4():
-    webbrowser.open("https://www.youtube.com/watch?v=ZYzbalQ6Lg8")
-
-root = Tk()
-
 
 def intro():
     print("Welcome to the program")
 
-def current_position():
-    return [root.winfo_pointerx(), root.winfo_pointery()]
-
 
 def choosetime():
-    usrin = input("Please choose one of the time management programs :D: (options : 25,50,90 mins) ")
+    usrin = input("Please choose one of the time management programs :D: ")
     if "25" in usrin:
         print("25min selected")
         chooseinput()
-        time.sleep(3)
         TFMIN()
     
 
@@ -110,15 +87,19 @@ def ok():
     listener.join()
     
 def blockmouse():
-        
-        while True:
-            time.sleep(0.5)
-            pos2 = current_position()
-            if not pos1 == pos2:
-                # run a command:
-                my_list = [func_test_1, func_test_2, func_test_3, func_test_4]
-                random.choice(my_list)()
-            pos1 = pos2
+        mr = mouse.Button.right
+        ml = mouse.Button.left
+        with mouse.Events() as events:
+            for event in events:
+                try:
+                    if event.button == ml:
+                        exit()
+
+                    elif event.button == mr:
+                        exit()
+    
+                except:
+                    exit()
                 
 
 def blockboth():
@@ -128,10 +109,7 @@ def blockboth():
     
 def TFMIN():
         print("starting the 25min timer, if you are found properly focusing on your work during this period and not getting distracted then you will be awarded 25 Shib-Inu as a prize :D but if you are found lacking then you wont recieve anything and you may retry")
-        pos1 = current_position()
-        t_end = time.time() + 60 * 25
-        while time.time() < t_end :
-            blockmouse()
+        blockmouse()
                
  
 def FTMIN():
@@ -144,3 +122,4 @@ def NTMIN():
 
 intro()
 choosetime()
+
