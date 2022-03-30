@@ -12,9 +12,9 @@ screen_manager = '''
 ScreenManager:
     id: sm
     Primary
-    Login:
     Register
     Menu
+    
 <Primary>:
     id: Ps
     name: 'primaryscreen'
@@ -53,23 +53,34 @@ ScreenManager:
 
 
 
-<Login>:
+<Register>:
     id: ls
-    name: 'loginscreen'
-    Image:
-        source: 'logo'
-        pos_hint:{"center_x":0.5,"center_y":0.83}
-        size_hint:(0.5,0.3)
+    name: 'registerscreen'
+    # Image:
+    #     source: 'logo'
+    #     pos_hint:{"center_x":0.5,"center_y":0.83}
+    #     size_hint:(0.5,0.3)
     MDLabel:
-        id: login
-        text: "Login"
-        pos_hint:{"center_x": 0.5,"center_y": 0.63}
+        id: register
+        text: "Register"
+        pos_hint:{"center_x": 0.5,"center_y": 0.83}
         halign: 'center'
         font_style: "H6"
         bold: True
+
+    MDTextField:
+        id: mail
+        hint_text:"Enter mail"
+        multiline: False
+        halign:"left"
+        pos_hint:{"center_x":0.5,"center_y":0.66}
+        #mode: "rectangle"
+        icon_right: "account"
+        size_hint:(0.54,0.1)
+
     MDTextField:
         id: username
-        hint_text:"Enter name"
+        hint_text:"Enter username"
         multiline: False
         halign:"left"
         pos_hint:{"center_x":0.5,"center_y":0.55}
@@ -90,7 +101,7 @@ ScreenManager:
         size_hint:(0.54,0.1)
     MDRectangleFlatButton:
         id: submitbutton
-        text:"Enter"
+        text:"SignUp"
         pos_hint:{"center_x":0.5,"center_y":0.29}
         size_hint:(0.17,0.07)
         font_size:20
@@ -105,6 +116,8 @@ ScreenManager:
         font_size:20
         on_release:
             root.manager.current = "primaryscreen"
+            # root.transition = SlideTransition(direction="left")
+
 
 
     MDIconButton:
@@ -116,13 +129,6 @@ ScreenManager:
         on_release: app.theme_changer()
         
         
-
-       
-<Register>:
-    id : rs
-    name: 'registerscreen'
-    MDLabel:
-        text: "register lol"
     
 <Menu>:
     id: ms
@@ -134,9 +140,6 @@ ScreenManager:
 
 
 #classes
-class Login(Screen):
-    pass
-
 class Register(Screen):
     pass
 
@@ -148,8 +151,7 @@ class Primary(Screen):
 
 #objects
 screen_manager_object = ScreenManager(transition = SlideTransition())
-screen_manager_object.add_widget(Login(name = 'loginscreen'))
-screen_manager_object.add_widget(Register(name ='registerscreen'))
+screen_manager_object.add_widget(Register(name = 'registerscreen'))
 screen_manager_object.add_widget(Menu(name='menuscreen'))
 screen_manager_object.add_widget(Primary(name='primaryscreen'))
 
@@ -172,13 +174,14 @@ class App(MDApp):
 
     def check_user_data(self):
             checkk = True
-            username = self.screen_manager_variable.get_screen('loginscreen').ids.username.text
-            # print(username_text_data)
-            try:
-                int(username)
-            except:
-                checkk = False
-            if checkk or username.split()==[]:
+            username = self.screen_manager_variable.get_screen('registerscreen').ids.username.text
+            print(username)
+            # try:
+            #     int(username)
+            # except:
+            #     checkk = False
+            # if checkk or username.split()==[]:
+            if len(username) == 0:
                 cancel_btn = MDFlatButton(text='Retry',on_release=self.close_dialog)
                 self.username_dialog = MDDialog(title = 'Invalid Username',text = 'Please enter a valid username',size_hint = (0.5,0.2), buttons = [cancel_btn] )
                 self.username_dialog.open()
